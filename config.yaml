@@ -1,0 +1,42 @@
+# 参数参考文件（实际运行以 src/config.py 为准）
+# 用途：给不熟悉 Python 的合作者快速查看/修改参数；main.py 不强制读取本文件。
+
+project:
+  name: "无人机多源遥感水华风险预警"
+  region: "三峡库区香溪河库湾"
+  crs: "EPSG:32649"          # 统一投影
+  grid_size: 10              # 网格边长（米）
+
+paths:
+  raw: "data/raw"            # GEE 导出、无人机原图
+  interim: "data/interim"    # 掩膜、重采样后的中间文件
+  processed: "data/processed" # dataset.csv 等成品
+  figures: "outputs/figures"  # 图件
+  tables: "outputs/tables"    # 表格
+  logs: "logs"                # 日志
+
+roi:                         # 研究区外接矩形（西, 南, 东, 北）
+  west: 110.60
+  south: 30.95
+  east: 110.85
+  north: 31.10
+
+labels:
+  quantiles: [70, 75, 80, 85]  # 标签切点候选
+  default: 80                  # 默认切点
+
+features:
+  lag_windows: [3, 10]         # 气象累积窗口（天）
+
+model:
+  seed: 42                     # 全局随机种子
+  rf:
+    n_estimators: 500          # 树的数量
+    min_samples_leaf: 5        # 叶节点最小样本
+    class_weight: "balanced"   # 类别权重
+  bootstrap_n: 1000            # paired bootstrap 次数
+  spatial_blocks: 5            # 空间块验证段数
+
+plot:
+  dpi: 300                     # 出图分辨率
+  font: "SimHei"               # 中文字体
